@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace API.Data.DataContext
+namespace API.Infrastructure.DataContext
 {
     public class StoreContext: DbContext
     {
@@ -15,5 +15,7 @@ namespace API.Data.DataContext
         }
 
         public DbSet<Product> Products { get; set; }
+        public DbSet<ProductBrand> ProductBrands { get; set; }
+        public DbSet<ProductType> ProductTypes { get; set; }
     }
 }
