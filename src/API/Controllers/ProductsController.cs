@@ -1,5 +1,6 @@
 ﻿using API.Core.DbModels;
 using API.Core.Interfaces;
+using API.Core.Specifications;
 using API.Infrastructure.DataContext;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -29,14 +30,16 @@ namespace API.Controllers
         [HttpGet]
         public async  Task<ActionResult<List<Product>>> GetProducts()
         {
-            var data = await productRepository.ListAllAsync();
+            var spec = new ProductsWithProductTypeAndBrandSpecification();
+            var data = await productRepository.ListAsync(spec);
             return Ok(data);
         }
 
         [HttpGet("{id}")]
         public async Task<ActionResult<Product>> GetSingleProduct(int id)
         {
-            return await productRepository.GetByIdAsync(id);
+            var spec = new ProductsWithProductTypeAndBrandSpecification(id);
+            return await productRepository.GetEntityWithSpec(spec);
         }
 
         [HttpGet("brands")]
