@@ -3,6 +3,7 @@ using API.Core.Interfaces;
 using API.Core.Specifications;
 using API.Dtos;
 using API.Infrastructure.DataContext;
+using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -21,20 +22,22 @@ namespace API.Controllers
         private readonly IGenericRepository<Product> productRepository;
         private readonly IGenericRepository<ProductBrand> productBrandRepo;
         private readonly IGenericRepository<ProductType> productTypeRepo;
+        private readonly IMapper mapper;
         public ProductsController(IGenericRepository<Product> productRepository, IGenericRepository<ProductBrand> productBrandRepo,
-            IGenericRepository<ProductType> productTypeRepo)
+            IGenericRepository<ProductType> productTypeRepo, IMapper mapper)
         {
             this.productBrandRepo = productBrandRepo;
             this.productTypeRepo = productTypeRepo;
             this.productRepository = productRepository;
+            this.mapper = mapper;
         }
         [HttpGet]
-        public async  Task<ActionResult<List<ProductDTO>>> GetProducts()
+        public async  Task<ActionResult<IReadOnlyList<ProductDTO>>> GetProducts()
         {
             var spec = new ProductsWithProductTypeAndBrandSpecification();
             var data = await productRepository.ListAsync(spec);
             //return Ok(data);
-            return data.Select(p => new ProductDTO 
+            /*return data.Select(p => new ProductDTO 
             {
                 ID = p.ID,
                 Name = p.Name,
@@ -43,7 +46,8 @@ namespace API.Controllers
                 Price = p.Price,
                 ProductBrand = p.ProductBrand != null ? p.ProductBrand.Name : string.Empty,
                 ProductType = p.ProductType != null ? p.ProductType.Name : string.Empty
-            }).ToList();
+            }).ToList();*/
+            return Ok(mapper.Map<IReadOnlyList<Product>, IReadOnlyList<ProductDTO>>(data));
         }
 
         [HttpGet("{id}")]
@@ -52,7 +56,7 @@ namespace API.Controllers
             var spec = new ProductsWithProductTypeAndBrandSpecification(id);
             // return await productRepository.GetEntityWithSpec(spec);
             var product = await productRepository.GetEntityWithSpec(spec);
-            return new ProductDTO
+            /*return new ProductDTO
             {
                 ID = product.ID,
                 Name = product.Name,
@@ -61,7 +65,8 @@ namespace API.Controllers
                 Price = product.Price,
                 ProductBrand = product.ProductBrand != null ? product.ProductBrand.Name : string.Empty,
                 ProductType = product.ProductType != null ? product.ProductType.Name : string.Empty
-            };
+            };*/
+            return mapper.Map<Product, ProductDTO>(product);
         }
 
         [HttpGet("brands")]
