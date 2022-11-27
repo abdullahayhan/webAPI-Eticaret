@@ -14,11 +14,9 @@ using System.Threading.Tasks;
 
 namespace API.Controllers
 {
-    [Route("api/[controller]")]
-    [ApiController]
-    public class ProductsController : ControllerBase
+    
+    public class ProductsController : BaseApiController
     {
-        
         private readonly IGenericRepository<Product> productRepository;
         private readonly IGenericRepository<ProductBrand> productBrandRepo;
         private readonly IGenericRepository<ProductType> productTypeRepo;
@@ -36,17 +34,6 @@ namespace API.Controllers
         {
             var spec = new ProductsWithProductTypeAndBrandSpecification();
             var data = await productRepository.ListAsync(spec);
-            //return Ok(data);
-            /*return data.Select(p => new ProductDTO 
-            {
-                ID = p.ID,
-                Name = p.Name,
-                Description = p.Description,
-                PictureUrl = p.PictureUrl,
-                Price = p.Price,
-                ProductBrand = p.ProductBrand != null ? p.ProductBrand.Name : string.Empty,
-                ProductType = p.ProductType != null ? p.ProductType.Name : string.Empty
-            }).ToList();*/
             return Ok(mapper.Map<IReadOnlyList<Product>, IReadOnlyList<ProductDTO>>(data));
         }
 
@@ -54,18 +41,7 @@ namespace API.Controllers
         public async Task<ActionResult<ProductDTO>> GetSingleProduct(int id)
         {
             var spec = new ProductsWithProductTypeAndBrandSpecification(id);
-            // return await productRepository.GetEntityWithSpec(spec);
             var product = await productRepository.GetEntityWithSpec(spec);
-            /*return new ProductDTO
-            {
-                ID = product.ID,
-                Name = product.Name,
-                Description = product.Description,
-                PictureUrl = product.PictureUrl,
-                Price = product.Price,
-                ProductBrand = product.ProductBrand != null ? product.ProductBrand.Name : string.Empty,
-                ProductType = product.ProductType != null ? product.ProductType.Name : string.Empty
-            };*/
             return mapper.Map<Product, ProductDTO>(product);
         }
 
