@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using API.Core.Interfaces;
+using API.Extensions;
 using API.Helpers;
 using API.Infrastructure.DataContext;
 using API.Infrastructure.Implements;
+using API.MiddleWare;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -30,19 +32,25 @@ namespace API
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddScoped<IProductRepository, ProductRepository>();
-            services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
+            services.AddApplicationServices();
             services.AddAutoMapper(typeof(MappingProfiles));
             services.AddControllers();
             services.AddDbContext<StoreContext>(options => options.UseSqlServer(Configuration["ConnectionStrings:Mssql"]));
+
+            services.AddSwaggerDocumantation();
+           
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            if (env.IsDevelopment())
-            {
-                app.UseDeveloperExceptionPage();
-            }
+            //if (env.IsDevelopment())
+            //{
+            //    app.UseDeveloperExceptionPage();
+            //}
+
+            app.UseMiddleware<ExceptionMiddleware>();
+
+            app.UseStatusCodePagesWithReExecute("/error/{0}");
 
             app.UseHttpsRedirection();
 
@@ -50,10 +58,13 @@ namespace API
 
             app.UseAuthorization();
 
+
+
+            app.UseSwaggerDocumantation(env);
+
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapControllerRoute(name: "default",
-                        pattern: "{controller=WeatherForecast}/{action=Get}");
+                endpoints.MapControllers();
             });
         }
     }

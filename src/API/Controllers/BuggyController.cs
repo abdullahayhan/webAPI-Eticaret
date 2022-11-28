@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 
 namespace API.Controllers
 {
+
     public class BuggyController : BaseApiController
     {
         private readonly StoreContext context;
