@@ -38,6 +38,13 @@ namespace API
             services.AddDbContext<StoreContext>(options => options.UseSqlServer(Configuration["ConnectionStrings:Mssql"]));
 
             services.AddSwaggerDocumantation();
+            services.AddCors(opt=> 
+            {
+                opt.AddPolicy("CorsPolicy",policy=>
+                {
+                    policy.AllowAnyHeader().AllowAnyMethod().WithOrigins("http://localhost:4200");
+                });
+            });
            
         }
 
@@ -58,10 +65,10 @@ namespace API
 
             app.UseAuthorization();
 
-
+            app.UseCors("CorsPolicy");
 
             app.UseSwaggerDocumantation(env);
-
+            app.UseStaticFiles();
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
