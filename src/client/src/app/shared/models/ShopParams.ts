@@ -3,5 +3,5 @@ export class ShopParams{
     typeID=0;
     sort='name';
     pageNumber=1;
-    pageSize=6;
+    pageSize=8;
 }
