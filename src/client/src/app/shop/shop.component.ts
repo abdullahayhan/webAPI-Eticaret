@@ -45,7 +45,7 @@ export class ShopComponent implements OnInit{
   }
 
   getBrands(){
-    var firstItem = {id:0,name:'All'};
+    var firstItem = {id:0,name:'Hepsi'};
     this.shopService.getBrands().subscribe(response=>{
       this.brands = [firstItem,...response];
     },err=>{
@@ -55,7 +55,7 @@ export class ShopComponent implements OnInit{
 
   getTypes(){
 
-    var firstItem = {id:0,name:'All'};
+    var firstItem = {id:0,name:'Hepsi'};
     this.shopService.getTypes().subscribe(response=>{
       this.types = [firstItem,...response];
     },err=>{
