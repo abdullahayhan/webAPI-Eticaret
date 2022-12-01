@@ -3,20 +3,18 @@
         <section class="col-3">
 
             <h5 class="ml-3"> Sort </h5>
-            <select class="custom-select mb-3">
-                <option selected>Alfabeye Göre</option>
-                <option>Fiyata Göre : Azdan Çoka</option>
-                <option>Fiyata Göre : Çoktan Aza</option>
+            <select class="custom-select mb-3" (change)="onSortSelected($any($event.target).value)">
+                <option *ngFor="let sort of sortOptions" [value]="sort.value">{{sort.name}}</option>           
             </select>
 
 
             <h5 class="ml-3"> Brands (Markalar)</h5>
             <ul class="list-group my3">
-                <li class="list-group-item" *ngFor="let brand of brands">{{brand.name}}</li>
+                <li class="list-group-item" *ngFor="let brand of brands" [class.active]="brand.id === this.brandIDSelected" [value]="brand.id" (click)="onBrandSelected(brand.id)">{{brand.name}}</li>
             </ul> <br>
             <h5 class="ml-3"> Types (Türler)</h5>
             <ul class="list-group my3">
-                <li class="list-group-item" *ngFor="let type of types">{{type.name}}</li>
+                <li class="list-group-item" *ngFor="let type of types" [class.active]="type.id === this.typeIDSelected" [value]="type.id" (click)="onTypeSelected(type.id)">{{type.name}}</li>
             </ul>
         </section>
         <section class="col-9">
