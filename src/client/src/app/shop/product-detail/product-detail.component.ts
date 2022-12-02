@@ -12,8 +12,6 @@ export class ProductDetailComponent implements OnInit {
   
 
   product!:IProduct;
-  s = 0;
-  deger!:number;
 
  constructor(private shopService:ShopService, private activeRoute: ActivatedRoute){} // dependecy injectionla shopservice'i aldık.
   
@@ -30,10 +28,6 @@ export class ProductDetailComponent implements OnInit {
     })
   }
   
-  artir(){
-    this.deger = +document.getElementById("sayi")!;
-    this.deger = this.s;
-    this.s++;
- }
+ 
 
 }
