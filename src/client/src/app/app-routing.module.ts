@@ -11,7 +11,7 @@ import { ShopComponent } from './shop/shop.component';
 const routes: Routes = [
   { path: '', component: HomeComponent, data: { breadcrumb: 'Ana Sayfa' } },
   {
-    path:'basket',component:BasketComponent, data:{breadcrumb:'Basket Page'}
+    path:'basketse',component:BasketComponent, data:{breadcrumb:'Basket Page'}
   },
   {
     path: 'test-error',
