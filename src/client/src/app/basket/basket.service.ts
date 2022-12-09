@@ -41,14 +41,15 @@ export class BasketService {
     // kullanıcı bir ürün eklediğinde bu ürünü sepetinde gösterebileceğiz.
     return this.http.post(this.baseUrl+'basket',basket).subscribe((response : IBasket)=>{
       this.basketSource.next(response);
+      console.log(response);
     },error=>{
       console.log(error);
     })
   }
 
   // mevcuttaki sepet varsa bana gönder demek.
-  getCurrentBasketValue(): any{
-    this.basketSource.value;
+  getCurrentBasketValue(){
+    return this.basketSource.value;
   }
 
 
@@ -57,28 +58,37 @@ export class BasketService {
   // mapProductItemToBasketItem() adlı bir fonk. ihtiyacımız var.
   addItemToBasket(item:IProduct,quantity=1){
     const itemToAdd: IBasketItem = this.mapProductItemToBasketItem(item,quantity);
+    console.log('itemToAdd',itemToAdd);
     // soru işareti this.getCurrentBasketValue() bir değeri var ise onu al yoksa this.createBasket() bunu al.
     const basket = this.getCurrentBasketValue() ?? this.createBasket();
+    console.log('addItemToBasket : ',basket);
     // burada böyle bir ürün sepette var mı varsa bir tane daha ekle şeklinde bir fonk yazıyoruz.
     basket.items = this.addOrUpdateItem(basket.items,itemToAdd,quantity);
+    this.setBasket(basket);
   }
 
   // index itemlerimde bana verilen item var mı yoksa direkt ekle varsa kaç tane varsa quantityi ona ekle
   // misal 3 tane saç boyam varsa 3 tane daha eklendi 6 oldu easy math baby
-  addOrUpdateItem(items: IBasketItem[], itemToAdd: IBasketItem, quantity: number): IBasketItem[] {
-   const index = items.findIndex(i=> i.id === itemToAdd.id);
-   if (index === -1) {
-    items.push(itemToAdd);
-   }
-   else{
-    items[index].quantity+=quantity;
-   }
-   return items;
+  private addOrUpdateItem(
+    items: IBasketItem[],
+    itemToAdd: IBasketItem,
+    quantity: number
+  ): IBasketItem[] {
+    console.log('addOrUpdateItem=>', items);
+    const index = items.findIndex((i) => i.id === itemToAdd.id);
+    if (index === -1) {
+      items.push(itemToAdd);
+      console.log("yeni bir ürün sepete eklendi");
+    } else {
+      items[index].quantity += quantity;
+      console.log("var olan ürüne ekleme yaptık.",items[index].quantity);
+    }
+    return items;
   }
 
 
   // mevcutta bir sepet yoksa bunu oluştur.
-  createBasket(): Basket {
+  private  createBasket(): Basket {
     const basket = new Basket();
     localStorage.setItem('basket_id',basket.id);
     return basket;
