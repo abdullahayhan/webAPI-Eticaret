@@ -1,8 +1,8 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
-import { BasketComponent } from './basket/basket.component';
-
+import { BasketComponent } from './basket.component';
+import { BrowserModule } from '@angular/platform-browser';
 
 const routes : Routes =[
   {path:'',component:BasketComponent}
@@ -12,6 +12,7 @@ const routes : Routes =[
   declarations: [],
   imports: [
     CommonModule,
+    BrowserModule,
     RouterModule.forChild(routes)
   ],
   exports:[

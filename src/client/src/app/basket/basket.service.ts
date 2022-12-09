@@ -31,6 +31,7 @@ export class BasketService {
         map((basket : IBasket)=>{
           // hem yayın yapabilen hem de onu dinleyen kullanıcılara istedikleri zaman dataları next ile ulaştırıyor.
           this.basketSource.next(basket);
+          console.log('sepet değerleri : ',this.getCurrentBasketValue());
         })
       );
   }
