@@ -21,7 +21,7 @@ namespace API.Controllers
         {
             var basket = await basketRepository.GetBasketAsync(id);
             return Ok(basket ?? new CustomerBasket(id)); 
-            // basketi gönder eğer yoksa bir tane customerBasket oluştur idsini ver gönder.
+            // basketi gönder eğer yoksa bir tane customerBasket oluştur idsini ver gönder."
         }
 
         [HttpPost]
