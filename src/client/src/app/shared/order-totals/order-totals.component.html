@@ -1,0 +1,11 @@
+<div *ngIf="(basketTotal$ | async)">
+    <dl class="dlist-align">
+        <dt>Sipariş Dip Toplam: <span class="text-right"> {{(basketTotal$ | async).subTotal}} TL</span></dt>
+    </dl>
+    <dl class="dlist-align">
+        <dt>Nakliye Ücreti:<span class="text-right text-danger ml-3">{{(basketTotal$ | async).shipping}} TL </span></dt>
+    </dl>
+    <dl class="dlist-align">
+        <dt>Genel Toplam: <span class="text-right text-dark b ml-3">{{(basketTotal$ | async).total}} TL</span></dt>
+    </dl>
+</div>
