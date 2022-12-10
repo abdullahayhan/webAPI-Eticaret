@@ -1,9 +1,69 @@
 <div *ngIf="basket!=null">
-    <div *ngIf="basket.items!=null">
-        <ul>
-            <li *ngFor="let item of basket.items ">
-                {{item.productName}} - {{item.quantity}}
-            </li>
-        </ul>
+    <div class="container-fluid">
+        <div class="row">
+            <aside class="col-lg-9">
+                <div class="card">
+                    <div class="table-responsive">
+                        <table class="table table-borderless table-shopping-cart">
+                            <thead class="text-muted">
+                                <tr class="small text-uppercase">
+                                    <th scope="col">Product</th>
+                                    <th scope="col" width="120">Quantity</th>
+                                    <th scope="col" width="120">Price</th>
+                                    <th scope="col" width="120">Total Price</th>
+                                    <th scope="col" class="text-right d-none d-md-block" width="200"></th>
+                                </tr>
+                            </thead>
+                            <tbody *ngIf="basket.items!=null">
+                                <tr *ngFor="let item of basket.items">
+                                    <td>
+                                        <figure class="itemside align-items-center">
+                                            <div class="aside"><img src={{item.pictureUrl}} class="img-sm"></div>
+                                            <figcaption class="info"> <a routerLink="/shop/{{item.id}}" class="d-inline-block align-middle" data-abc="true">{{item.productName}}</a>
+                                                <p class="text-muted small">Type : {{item.type}} <br> Brand: {{item.brand}}</p>
+                                            </figcaption>
+                                        </figure>
+                                    </td>
+                                    <div class="cart mt-4 align-items-center">
+                                        <i class="fa fa-minus-circle text-warning mx-2" style="cursor:pointer; font-size:2em"></i>
+                                        <span class="font-weight bold" style="font-size : 1.5em;">{{item.quantity}} </span>
+                                        <i class="fa fa-plus-circle text-warning" style="cursor:pointer; font-size:2em"></i>
+                                    </div>
+                                    <td>
+                                        <div class="price-wrap"> <var class="price">{{item.price | currency}}</var> <small class="text-muted"> {{(((item.price*3)/10)) * item.quantity | currency}}</small> </div>
+                                    </td>
+                                    <td>
+                                        <div class="price-wrap">
+                                            <var class="price"> {{item.price*item.quantity | currency}}</var>
+                                        </div>
+                                    </td>
+                                    <td class="text-right d-none d-md-block">
+                                        <a data-original-title="Save to Wishlist" title="" href="" class="btn btn-light" data-toggle="tooltip" data-abc="true"> <i class="fa fa-heart"></i></a> <a href="" class="btn btn-light" data-abc="true"> Remove</a> </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </aside>
+            <aside class="col-lg-3">
+                <div class="card">
+                    <div class="card-body">
+                        <dl class="dlist-align">
+                            <dt>Total price:</dt>
+                            <dd class="text-right ml-3">$69.97</dd>
+                        </dl>
+                        <dl class="dlist-align">
+                            <dt>Discount:</dt>
+                            <dd class="text-right text-danger ml-3">- $10.00</dd>
+                        </dl>
+                        <dl class="dlist-align">
+                            <dt>Total:</dt>
+                            <dd class="text-right text-dark b ml-3"><strong>$59.97</strong></dd>
+                        </dl>
+                        <hr> <a href="#" class="btn btn-out btn-primary btn-square btn-main" data-abc="true"> Make Purchase </a> <a href="#" class="btn btn-out btn-success btn-square btn-main mt-2" data-abc="true">Continue Shopping</a>
+                    </div>
+                </div>
+            </aside>
+        </div>
     </div>
 </div>
