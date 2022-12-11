@@ -14,6 +14,7 @@
                                     <th scope="col" class="text-right d-none d-md-block" width="200"></th>
                                 </tr>
                             </thead>
+
                             <tbody *ngIf="basket.items!=null">
                                 <tr *ngFor="let item of basket.items">
                                     <td>
@@ -56,6 +57,11 @@
                     </div>
                 </div>
             </aside>
+
         </div>
     </div>
+</div>
+
+<div *ngIf="basket===null">
+    <h2>You Do Not Have Any Product In Your Basket. <br> Please Back To The Shopping Page And Add Product To Basket.</h2>
 </div>
