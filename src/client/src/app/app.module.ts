@@ -10,6 +10,7 @@ import { HomeModule } from './home/home.module';
 import { ErrorInterceptor } from './core/interceptor/error.intector';
 import { CommonModule } from '@angular/common';
 import { BasketModule } from './basket/basket.module';
+import { CheckoutModule } from './checkout/checkout.module';
 
 @NgModule({ 
   declarations: [
@@ -24,7 +25,8 @@ import { BasketModule } from './basket/basket.module';
     CoreModule,
     ShopModule,
     HomeModule,
-    BasketModule
+    BasketModule,
+    CheckoutModule
   ],
   providers: [
     {provide:HTTP_INTERCEPTORS,useClass:ErrorInterceptor,multi:true},], 

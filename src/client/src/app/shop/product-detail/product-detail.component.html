@@ -22,11 +22,12 @@
                             </div>
                             <p class="about">{{product.description}}</p>
                             <div class="cart mt-4 align-items-center">
-                                <i class="fa fa-minus-circle text-warning mx-2" style="cursor:pointer; font-size:2em"></i>
-                                <i class="fa fa-plus-circle text-warning mx-2" style="cursor:pointer; font-size:2em"></i>
+                                <i (click)="decrementQuantity()" class="fa fa-minus-circle text-warning mx-2" style="cursor:pointer; font-size:2em"></i>
+                                <span class="font-weight bold" style="font-size : 1.5em;">{{quantity}}</span>
+                                <i (click)="incrementQuantity()" class="fa fa-plus-circle text-warning mx-2" style="cursor:pointer; font-size:2em"></i>
                             </div> <br>
                             <div class="d-flex justify-content-start align-items-center">
-                                <button class="btn btn-danger text-uppercase mr-2 px-4">Add to cart</button>
+                                <button (click)="addItemToBasket()" class="btn btn-danger text-uppercase mr-2 px-4">Sepete Ekle</button>
                             </div>
                         </div>
                     </div>

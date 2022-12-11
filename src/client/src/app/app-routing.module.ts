@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { BasketComponent } from './basket/basket.component';
+import { CheckoutComponent } from './checkout/checkout.component';
 import { NotFoundComponent } from './core/not-found/not-found.component';
 import { ServerErrorComponent } from './core/server-error/server-error.component';
 import { TestErrorComponent } from './core/test-error/test-error.component';
@@ -11,7 +12,10 @@ import { ShopComponent } from './shop/shop.component';
 const routes: Routes = [
   { path: '', component: HomeComponent, data: { breadcrumb: 'Ana Sayfa' } },
   {
-    path:'basketse',component:BasketComponent, data:{breadcrumb:'Basket Page'}
+    path:'basket',component:BasketComponent, data:{breadcrumb:'Basket Page'}
+  },
+  {
+    path:'checkout',component:CheckoutComponent, data:{breadcrumb:'Basket Page'}
   },
   {
     path: 'test-error',
