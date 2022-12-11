@@ -25,9 +25,9 @@
                                         </figure>
                                     </td>
                                     <div class="cart mt-4 align-items-center">
-                                        <i class="fa fa-minus-circle text-warning mx-2" style="cursor:pointer; font-size:2em"></i>
+                                        <i (click)="decrementItemQuantity(item)" class="fa fa-minus-circle text-warning mx-2" style="cursor:pointer; font-size:2em"></i>
                                         <span class="font-weight bold" style="font-size : 1.5em;">{{item.quantity}} </span>
-                                        <i class="fa fa-plus-circle text-warning" style="cursor:pointer; font-size:2em"></i>
+                                        <i (click)="incrementItemQuantity(item)" class="fa fa-plus-circle text-warning" style="cursor:pointer; font-size:2em"></i>
                                     </div>
                                     <td>
                                         <div class="price-wrap"> <var class="price">{{item.price | currency}}</var> <small class="text-muted"> {{(((item.price*3)/10)) * item.quantity | currency}}</small> </div>
@@ -38,7 +38,7 @@
                                         </div>
                                     </td>
                                     <td class="text-right d-none d-md-block">
-                                        <a data-original-title="Save to Wishlist" title="" href="" class="btn btn-light" data-toggle="tooltip" data-abc="true"> <i class="fa fa-heart"></i></a> <a href="" class="btn btn-light" data-abc="true"> Remove</a> </td>
+                                        <a data-original-title="Save to Wishlist" class="btn btn-light" data-toggle="tooltip" data-abc="true"> <i class="fa fa-heart"></i></a> <a (click)="removeBasketItem(item)" class="btn btn-light" data-abc="true"> Remove</a> </td>
                                 </tr>
                             </tbody>
                         </table>

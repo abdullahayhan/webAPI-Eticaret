@@ -20,8 +20,7 @@ namespace API.Controllers
         public async Task<ActionResult<CustomerBasket>> GetBasketById(string id)
         {
             var basket = await basketRepository.GetBasketAsync(id);
-            return Ok(basket ?? new CustomerBasket(id)); 
-            // basketi gönder eğer yoksa bir tane customerBasket oluştur idsini ver gönder."
+            return Ok(basket ?? new CustomerBasket(id));
         }
 
         [HttpPost]
