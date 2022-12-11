@@ -4,14 +4,16 @@ using API.Infrastructure.DataContext;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace API.Infrastructure.Migrations
 {
     [DbContext(typeof(StoreContext))]
-    partial class StoreContextModelSnapshot : ModelSnapshot
+    [Migration("20221211131336_IdentityAdded2")]
+    partial class IdentityAdded2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -26,7 +28,7 @@ namespace API.Infrastructure.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("AppUserId")
+                    b.Property<string>("AppUserID")
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("City")
@@ -49,9 +51,9 @@ namespace API.Infrastructure.Migrations
 
                     b.HasKey("ID");
 
-                    b.HasIndex("AppUserId")
+                    b.HasIndex("AppUserID")
                         .IsUnique()
-                        .HasFilter("[AppUserId] IS NOT NULL");
+                        .HasFilter("[AppUserID] IS NOT NULL");
 
                     b.ToTable("Adresses");
                 });
@@ -323,7 +325,7 @@ namespace API.Infrastructure.Migrations
                 {
                     b.HasOne("API.Core.DbModels.Identity.AppUser", "AppUser")
                         .WithOne("Adress")
-                        .HasForeignKey("API.Core.DbModels.Identity.Adress", "AppUserId");
+                        .HasForeignKey("API.Core.DbModels.Identity.Adress", "AppUserID");
 
                     b.Navigation("AppUser");
                 });
