@@ -34,7 +34,7 @@ namespace API
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddApplicationServices();
-            services.AddIdentityService();
+            services.AddIdentityService(Configuration);
             services.AddAutoMapper(typeof(MappingProfiles));
             services.AddControllers();
             services.AddDbContext<StoreContext>(options => options.UseSqlServer(Configuration["ConnectionStrings:Mssql"]));
@@ -70,6 +70,10 @@ namespace API
 
             app.UseRouting();
 
+
+
+            // identity iþlemleri için
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseCors("CorsPolicy");

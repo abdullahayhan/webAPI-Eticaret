@@ -1,4 +1,5 @@
 ﻿using API.Core.DbModels.Identity;
+using API.Core.Interfaces;
 using API.Dtos;
 using API.Errors;
 using Microsoft.AspNetCore.Identity;
@@ -15,13 +16,19 @@ namespace API.Controllers
         // user işlemleri için usermanager kullan ve appuserı içine ver.
         private readonly UserManager<AppUser> userManager;
 
-        //Giriş yapıldı mı yapılmadı mı kontrol etmek için.
+        // Giriş yapıldı mı yapılmadı mı kontrol etmek için.
         private readonly SignInManager<AppUser> signInManager;
 
-        public AccountController(UserManager<AppUser> userManager, SignInManager<AppUser> signInManager)
+
+        // token için
+        private readonly ITokenService tokenService;
+
+        public AccountController(UserManager<AppUser> userManager, SignInManager<AppUser> signInManager,
+            ITokenService tokenService)
         {
             this.userManager = userManager;
             this.signInManager = signInManager;
+            this.tokenService = tokenService;
         }
 
         [HttpPost("login")]
@@ -34,11 +41,11 @@ namespace API.Controllers
             if (!result.Succeeded)
                 return Unauthorized(new ApiResponse(401));
 
-            return new UserDTO 
+            return new UserDTO
             {
-                Email=user.Email,
-                DisplayName=user.DisplayName,
-                Token ="This will be token value"
+                Email = user.Email,
+                DisplayName = user.DisplayName,
+                Token = tokenService.CreateToken(user)
             };
         }
 
@@ -60,7 +67,7 @@ namespace API.Controllers
             {
                 DisplayName = user.DisplayName,
                 Email=user.Email,
-                Token ="This will be token value"
+                Token = tokenService.CreateToken(user)
             };
         }
 
