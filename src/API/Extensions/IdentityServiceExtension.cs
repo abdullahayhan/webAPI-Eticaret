@@ -15,34 +15,25 @@ namespace API.Extensions
 {
     public static class IdentityServiceExtension
     {
-        public static IServiceCollection AddIdentityService(this IServiceCollection services, IConfiguration config)
+        public static IServiceCollection AddIdentityServices(this IServiceCollection services, IConfiguration config)
         {
-            // bu classı identitycore olarak ekle
-            var builder = services.AddIdentityCore<AppUser>(); 
-
-            // builder oluştur ve userType ve bir adet service ver
-            builder = new IdentityBuilder(builder.UserType,builder.Services);
-            
-            // Bu context üzerinden işlemlerini yapacaksın. 
+            var builder = services.AddIdentityCore<AppUser>();
+            builder = new IdentityBuilder(builder.UserType, builder.Services);
             builder.AddEntityFrameworkStores<StoreContext>();
-
-            // SingInManager gördüğün anda AppUser üzerinden işlem yaptığını anla.
             builder.AddSignInManager<SignInManager<AppUser>>();
 
-            // yetkili mi değil mi diye
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-                .AddJwtBearer(options => 
-                {
-                    options.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters
+                    .AddJwtBearer(options =>
                     {
-                        ValidateIssuerSigningKey = true,
-                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(config["Token:Key"])),
-                        ValidIssuer = config["Token:Issuer"],
-                        ValidateIssuer = true
-                };
-                }); 
-
-
+                        options.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters
+                        {
+                            ValidateIssuerSigningKey = true,
+                            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(config["Token:Key"])),
+                            ValidIssuer = config["Token:Issuer"],
+                            ValidateIssuer = true,
+                            ValidateAudience = false
+                        };
+                    });
             return services;
         }
     }

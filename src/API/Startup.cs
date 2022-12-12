@@ -8,9 +8,11 @@ using API.Helpers;
 using API.Infrastructure.DataContext;
 using API.Infrastructure.Implements;
 using API.MiddleWare;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -33,8 +35,7 @@ namespace API
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddApplicationServices();
-            services.AddIdentityService(Configuration);
+           
             services.AddAutoMapper(typeof(MappingProfiles));
             services.AddControllers();
             services.AddDbContext<StoreContext>(options => options.UseSqlServer(Configuration["ConnectionStrings:Mssql"]));
@@ -43,6 +44,19 @@ namespace API
                 var configuration = ConfigurationOptions.Parse(Configuration.GetConnectionString("Redis"), true);
                 return ConnectionMultiplexer.Connect(configuration);
             }); // redisi kullanmak için.
+            services.AddApplicationServices();
+
+
+
+
+            // Adding Authentication
+            services.AddAuthentication(options =>
+            {
+                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+            });
+            services.AddIdentityServices(Configuration);
 
             services.AddSwaggerDocumantation();
             services.AddCors(opt=> 
@@ -65,21 +79,15 @@ namespace API
             app.UseMiddleware<ExceptionMiddleware>();
 
             app.UseStatusCodePagesWithReExecute("/error/{0}");
-
+            app.UseStaticFiles();
             app.UseHttpsRedirection();
 
             app.UseRouting();
-
-
-
+            app.UseCors("CorsPolicy");
             // identity iþlemleri için
             app.UseAuthentication();
             app.UseAuthorization();
-
-            app.UseCors("CorsPolicy");
-
             app.UseSwaggerDocumantation(env);
-            app.UseStaticFiles();
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();

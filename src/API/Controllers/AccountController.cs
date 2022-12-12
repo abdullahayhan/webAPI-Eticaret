@@ -2,6 +2,7 @@
 using API.Core.Interfaces;
 using API.Dtos;
 using API.Errors;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -100,17 +101,17 @@ namespace API.Controllers
 
 
 
-        //[Authorize]
+        [Authorize]
         [HttpGet("address")]
         public async Task<ActionResult<Adress>> GetUserAdress()
         {
-
-            //var email = HttpContext.User?.Claims?.FirstOrDefault(x => x.Type == ClaimTypes.Email)?.Value;
-            // var email = "ayhan@gmail.com";
-            var email = HttpContext.User?.Claims?.FirstOrDefault(x => x.Type == ClaimTypes.Email)?.Value;
+            var email = HttpContext.User?.Claims.FirstOrDefault(x => x.Type == ClaimTypes.Email)?.Value;
             var user = await userManager.FindByEmailAsync(email);
             return user.Adress;
         }
+
+
+        
 
 
     }
