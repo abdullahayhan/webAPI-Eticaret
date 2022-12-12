@@ -2,11 +2,13 @@
 using API.Core.Interfaces;
 using API.Dtos;
 using API.Errors;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace API.Controllers
@@ -71,6 +73,44 @@ namespace API.Controllers
             };
         }
 
+        [Authorize]
+        [HttpGet]
+        public async Task<ActionResult<UserDTO>> GetCurrentUser()
+        {
+            var email = HttpContext.User?.Claims?.FirstOrDefault(x => x.Type == ClaimTypes.Email)?.Value;
+
+            var user = await userManager.FindByEmailAsync(email);
+
+            return new UserDTO 
+            {
+               DisplayName = user.DisplayName,
+               Email = user.Email,
+               Token = tokenService.CreateToken(user)
+            };
+        }
+
+
+
+        [HttpGet("emailexists")]
+        // parametrede bu sana urlden gelicek diyorum.
+        public async Task<ActionResult<bool>> CheckEmailExistAsync([FromQuery] string email)
+        {
+            return await userManager.FindByEmailAsync(email) != null;
+        }
+
+
+
+        //[Authorize]
+        [HttpGet("address")]
+        public async Task<ActionResult<Adress>> GetUserAdress()
+        {
+
+            //var email = HttpContext.User?.Claims?.FirstOrDefault(x => x.Type == ClaimTypes.Email)?.Value;
+            // var email = "ayhan@gmail.com";
+            var email = HttpContext.User?.Claims?.FirstOrDefault(x => x.Type == ClaimTypes.Email)?.Value;
+            var user = await userManager.FindByEmailAsync(email);
+            return user.Adress;
+        }
 
 
     }

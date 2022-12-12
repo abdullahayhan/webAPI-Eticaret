@@ -33,13 +33,12 @@ namespace API.Infrastructure.Services
         {
             var claim = new List<Claim>
             {
-                new Claim(JwtRegisteredClaimNames.Email,user.Email),
-                new Claim(JwtRegisteredClaimNames.GivenName,user.DisplayName)
+                new Claim(ClaimTypes.Email,user.Email),
+                new Claim(ClaimTypes.GivenName,user.DisplayName)
             };
-
             var cred = new SigningCredentials(key, SecurityAlgorithms.HmacSha512Signature);
 
-            var tokenDescriptor = new SecurityTokenDescriptor
+            var tokenDesciptor = new SecurityTokenDescriptor
             {
                 Subject = new ClaimsIdentity(claim),
                 Expires = DateTime.Now.AddDays(7),
@@ -49,7 +48,7 @@ namespace API.Infrastructure.Services
 
             var tokenHandler = new JwtSecurityTokenHandler();
 
-            var token = tokenHandler.CreateToken(tokenDescriptor);
+            var token = tokenHandler.CreateToken(tokenDesciptor);
 
             return tokenHandler.WriteToken(token);
         }
