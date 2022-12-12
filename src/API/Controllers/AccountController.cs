@@ -25,7 +25,6 @@ namespace API.Controllers
         }
 
         [HttpPost("login")]
-
         public async Task<ActionResult<UserDTO>> Login(LoginDTO loginDto)
         {
             var user = await userManager.FindByEmailAsync(loginDto.Email);
@@ -41,7 +40,30 @@ namespace API.Controllers
                 DisplayName=user.DisplayName,
                 Token ="This will be token value"
             };
-        } 
+        }
+
+        [HttpPost("register")]
+        public async Task<ActionResult<UserDTO>> Register(RegisterDTO registerDto)
+        {
+            var user = new AppUser
+            {
+                DisplayName = registerDto.DisplayName,
+                Email = registerDto.Email,
+                UserName = registerDto.Email
+            };
+
+            var result = await userManager.CreateAsync(user, registerDto.Password);
+            if (!result.Succeeded)
+                return BadRequest(new ApiResponse(400));
+
+            return new UserDTO
+            {
+                DisplayName = user.DisplayName,
+                Email=user.Email,
+                Token ="This will be token value"
+            };
+        }
+
 
 
     }
