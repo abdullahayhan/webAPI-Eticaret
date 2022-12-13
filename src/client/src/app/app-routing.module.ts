@@ -1,5 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { LoginComponent } from './account/login/login.component';
+import { RegisterComponent } from './account/register/register.component';
 import { BasketComponent } from './basket/basket.component';
 import { CheckoutComponent } from './checkout/checkout.component';
 import { NotFoundComponent } from './core/not-found/not-found.component';
@@ -38,8 +40,13 @@ const routes: Routes = [
     component: ProductDetailComponent,
     data: { breadcrumb: { alias: 'shopDetail' } },
   },
+  {
+    path: 'account',
+    loadChildren: () =>
+      import('./account/account.module').then((mod) => mod.AccountModule),
+    data: { breadcrumb: { skip: true } },
+  },
   { path: '**', redirectTo: '', pathMatch: 'full' }, // herhangi bir root bulunamazsa.
-
 ];
 
 @NgModule({
