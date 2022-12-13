@@ -12,7 +12,15 @@
             <!-- basket değeri varsa al demek -->
             <div *ngIf="(basket$ | async) as basket" class="cart-no">{{basket.items.length}}</div>
         </a>
-        <a routerLink="/account/login" class="btn btn-outline-secondary mr-2">Login</a>
-        <a routerLink="/account/register" class="btn btn-outline-secondary mr-3">Sign Up!</a>
+
+        <ng-container *ngIf="(currentUser$ |async) === null">
+            <a routerLink="/account/login" class="btn btn-outline-secondary mr-2">Login</a>
+            <a routerLink="/account/register" class="btn btn-outline-secondary mr-3">Sign Up!</a>
+        </ng-container>
+
+        <ng-container *ngIf="(currentUser$ |async) as currentUser">
+            <a href="#">Hoşgeldin {{currentUser.displayName}}</a>
+        </ng-container>
+
     </div>
 </div>
