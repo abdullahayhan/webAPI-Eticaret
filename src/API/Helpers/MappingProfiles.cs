@@ -1,4 +1,5 @@
 ﻿using API.Core.DbModels;
+using API.Core.DbModels.Identity;
 using API.Dtos;
 using AutoMapper;
 using System;
@@ -15,6 +16,9 @@ namespace API.Helpers
             CreateMap<Product, ProductDTO>()
                 .ForMember(x=>x.ProductBrand,y=>y.MapFrom(z=>z.ProductBrand.Name))
                 .ForMember(x=>x.ProductType,y=>y.MapFrom(z=>z.ProductType.Name));
+
+
+            CreateMap<Adress, AdressDTO>().ReverseMap();
         }
     }
 }
