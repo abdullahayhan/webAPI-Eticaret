@@ -16,7 +16,9 @@ export class AccountService {
   private currentUserSource = new BehaviorSubject<IUser>(null);
   currentUser$ = this.currentUserSource.asObservable();
 
-  constructor(private http:HttpClient, private router:Router) { }
+  constructor(private http:HttpClient, private router:Router) {
+    console.log(this.getCurrentUserValue());
+   }
 
   getCurrentUserValue(){
     return this.currentUserSource.value;
@@ -24,13 +26,11 @@ export class AccountService {
 
   loadCurrentUser(token:string){
     let headers = new HttpHeaders();
-
-    headers = headers.set('Authorization',`Bearer $(token)`);
-
+    headers = headers.set('Authorization', `Bearer ${token}`);
     return this.http.get(this.baseUrl+'account',{headers}).pipe(
       map((user:IUser)=>{ // USER İFADEMİ IUSERA DÖNÜŞTÜR.
         if (user) {
-          localStorage.setItem('token :',user.token);
+          localStorage.setItem('token',user.token);
           this.currentUserSource.next(user);
         }
       })
@@ -62,6 +62,7 @@ export class AccountService {
 
   loginOut(){
     localStorage.removeItem('token');
+    localStorage.removeItem('basket_id');
     this.currentUserSource.next(null);
     this.router.navigateByUrl('/');
   }

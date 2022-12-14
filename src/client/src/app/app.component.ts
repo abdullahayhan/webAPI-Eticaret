@@ -1,4 +1,4 @@
-import { Component,OnInit } from '@angular/core';
+import { Component,HostListener,OnInit } from '@angular/core';
 import { AccountService } from './account/account.service';
 import { BasketService } from './basket/basket.service';
 
@@ -30,7 +30,7 @@ export class AppComponent implements OnInit {
     }
   }
 
-
+ 
 
   loadBasket(){
     const basketId = localStorage.getItem('basket_id');

@@ -7,12 +7,21 @@
             <div class="form-label-group mb-2">
                 <label for="inputEmail" class="visually-hidden">Email Address</label>
                 <input formControlName="email" type="email" id="inputEmail" class="form-control" placeholder="Email Address">
+                <span class="text-danger" *ngIf="loginForm.get('email').invalid && loginForm.get('email').touched && loginForm.get('email').errors['required']">
+                    Email address is required
+                </span>
+                <span class="text-danger" *ngIf="loginForm.get('email').invalid && loginForm.get('email').touched && loginForm.get('email').errors['pattern']">
+                    Email address is not valid
+                </span>
             </div>
             <div class="form-label-group mb-2">
                 <label for="inputPassword" class="visually-hidden">Password</label>
                 <input formControlName="password" type="password" id="inputPassword" class="form-control" placeholder="Password">
+                <span class="text-danger" *ngIf="loginForm.get('password').invalid && loginForm.get('password').touched && loginForm.get('password').errors['required']">
+                    Password address is required
+                </span>
             </div>
-            <button class="w-100 btn btn-lg btn-primary btn-block" type="submit">Log in</button>
+            <button [disabled]="loginForm.invalid" class="w-100 btn btn-lg btn-primary btn-block" type="submit">Log in</button>
         </form>
     </div>
 </div>
