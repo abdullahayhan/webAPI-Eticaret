@@ -1,5 +1,4 @@
 import { NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
 import {HttpClientModule, HTTP_INTERCEPTORS} from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -12,13 +11,13 @@ import { CommonModule } from '@angular/common';
 import { BasketModule } from './basket/basket.module';
 import { CheckoutModule } from './checkout/checkout.module';
 import { AccountModule } from './account/account.module';
+import { SharedModule } from './shared/shared.module';
 
 @NgModule({ 
   declarations: [
     AppComponent
   ],
   imports: [
-    BrowserModule,
     CommonModule,
     AppRoutingModule,
     BrowserAnimationsModule,
@@ -28,7 +27,8 @@ import { AccountModule } from './account/account.module';
     HomeModule,
     BasketModule,
     CheckoutModule,
-    AccountModule
+    AccountModule,
+    SharedModule
   ],
   providers: [
     {provide:HTTP_INTERCEPTORS,useClass:ErrorInterceptor,multi:true},], 
