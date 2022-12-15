@@ -1,9 +1,8 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { LoginComponent } from './account/login/login.component';
-import { RegisterComponent } from './account/register/register.component';
 import { BasketComponent } from './basket/basket.component';
 import { CheckoutComponent } from './checkout/checkout.component';
+import { AuthGuard } from './core/guards/auth.guard';
 import { NotFoundComponent } from './core/not-found/not-found.component';
 import { ServerErrorComponent } from './core/server-error/server-error.component';
 import { TestErrorComponent } from './core/test-error/test-error.component';
@@ -17,7 +16,7 @@ const routes: Routes = [
     path:'basket',component:BasketComponent, data:{breadcrumb:'Basket Page'}
   },
   {
-    path:'checkout',component:CheckoutComponent, data:{breadcrumb:'Basket Page'}
+    path:'checkout', canActivate:[AuthGuard],component:CheckoutComponent, data:{breadcrumb:'Checkout Page'}
   },
   {
     path: 'test-error',
