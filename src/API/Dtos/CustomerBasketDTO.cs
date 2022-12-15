@@ -10,8 +10,6 @@ namespace API.Dtos
     {
         [Required]
         public string ID { get; set; }
-        [Required]
-        public string userToken { get; set; }
         public List<BasketItemDTO> Items { get; set; }
     }
 }

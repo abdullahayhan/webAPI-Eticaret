@@ -14,8 +14,8 @@ export class AppComponent implements OnInit {
 
   // sepet nesnemize locastroge üzerinden id ile ulaşıyoruz.
   ngOnInit(): void {
-    this.loadBasket();
     this.loadCurrentUser();
+    this.loadBasket();
   }
 
 
@@ -34,7 +34,6 @@ export class AppComponent implements OnInit {
 
   loadBasket(){
     const basketId = localStorage.getItem('basket_id');
-    const token = localStorage.getItem('token');
     if (basketId) {
       this.basketService.getBasket(basketId).subscribe(()=>{
         console.log('sepete ulaşıldı.')

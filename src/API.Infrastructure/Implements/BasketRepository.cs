@@ -31,23 +31,6 @@ namespace API.Infrastructure.Implements
             // bunun için de customerbasket tipindeki modele çevireceksin çevireceğin değişken ise datadır diyoz.
         }
 
-
-        //public async Task<CustomerBasket> GetBasketByTokenAsync(string basketId,string userToken)
-        //{
-        //    var data = await database.StringGetAsync(basketId);
-        //    var x = data.IsNullOrEmpty ? null : JsonSerializer.Deserialize<CustomerBasket>(data);
-        //    if (x.UserToken==userToken)
-        //    {
-        //        return x;
-        //    }
-        //    else
-        //    {
-        //        return null;
-        //    }
-        //}
-
-
-
         public async Task<CustomerBasket> UpdateBasketAsync(CustomerBasket basket)
         {
             var created = await database.StringSetAsync(basket.ID

@@ -23,7 +23,7 @@ export class BasketService {
   basketTotal$=this.basketTotalSource.asObservable();
 
 
-  constructor(private http: HttpClient, private accountService:AccountService) {}
+  constructor(private http: HttpClient) {}
 
   getBasket(id: string) {
     return this.http.get(this.baseUrl + 'basket?id=' + id).pipe(
@@ -51,6 +51,8 @@ export class BasketService {
     );
   }
 
+
+
   getCurrentBasketValue() {
     return this.basketSource.value;
   }
@@ -64,11 +66,12 @@ export class BasketService {
     );
     const basket = this.getCurrentBasketValue() ?? this.createBasket();
     console.log('addItemToBasket=>', basket);
-    basket.items = this.addOrUpdateItem(basket.items, itemToAdd, quantity,);
-    // deneme
-    basket.userToken = this.accountService.getCurrentUserValue().token;
+    basket.items = this.addOrUpdateItem(basket.items, itemToAdd, quantity);
     this.setBasket(basket);
   }
+
+
+
   private addOrUpdateItem(
     items: IBasketItem[],
     itemToAdd: IBasketItem,
@@ -78,7 +81,6 @@ export class BasketService {
     const index = items.findIndex((i) => i.id === itemToAdd.id);
     if (index === -1) {
       items.push(itemToAdd);
-
     } else {
       items[index].quantity += quantity;
     }
