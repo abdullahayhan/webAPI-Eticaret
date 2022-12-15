@@ -3,6 +3,8 @@ import { v4 as uuidv4 } from 'uuid';
 
     export interface IBasket {
     id: string;
+    //
+    userToken :string;
     items: IBasketItem[];
     }
 
@@ -18,6 +20,8 @@ import { v4 as uuidv4 } from 'uuid';
 
     export class Basket implements IBasket {
         id: string = uuidv4();
+        //
+        userToken:string;
         items: IBasketItem[] = [];
 
     }

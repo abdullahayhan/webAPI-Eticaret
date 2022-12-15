@@ -27,6 +27,15 @@ namespace API.Controllers
             return Ok(basket ?? new CustomerBasket(id));
         }
 
+
+
+        //[HttpGet("getBasketByToken")]
+        //public async Task<ActionResult<CustomerBasket>> GetBasketByUserToken(string usertoken)
+        //{
+        //    var basket = await basketRepository.GetBasketByTokenAsync(usertoken);
+        //    return Ok(basket ?? new CustomerBasket(id));
+        //}
+
         [HttpPost]
         public async Task<ActionResult<CustomerBasket>> UpdateBasket(CustomerBasketDTO basket)
         {

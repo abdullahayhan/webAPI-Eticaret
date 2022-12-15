@@ -10,6 +10,7 @@ import {
 import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
 import { IProduct } from '../shared/models/IProduct';
+import { AccountService } from '../account/account.service';
 
 @Injectable({
   providedIn: 'root',
@@ -22,16 +23,17 @@ export class BasketService {
   basketTotal$=this.basketTotalSource.asObservable();
 
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private accountService:AccountService) {}
 
   getBasket(id: string) {
     return this.http.get(this.baseUrl + 'basket?id=' + id).pipe(
       map((basket: IBasket) => {
-        this.basketSource.next(basket);
-        this.calculateTotals();
+          this.basketSource.next(basket);
+          this.calculateTotals();
       })
     );
   }
+
 
   setBasket(basket: IBasket) {
     return this.http.post(this.baseUrl + 'basket', basket).subscribe(
@@ -52,6 +54,9 @@ export class BasketService {
   getCurrentBasketValue() {
     return this.basketSource.value;
   }
+
+
+
   addItemToBasket(item: IProduct, quantity = 1) {
     const itemToAdd: IBasketItem = this.mapProductItemToBasketItem(
       item,
@@ -59,18 +64,21 @@ export class BasketService {
     );
     const basket = this.getCurrentBasketValue() ?? this.createBasket();
     console.log('addItemToBasket=>', basket);
-    basket.items = this.addOrUpdateItem(basket.items, itemToAdd, quantity);
+    basket.items = this.addOrUpdateItem(basket.items, itemToAdd, quantity,);
+    // deneme
+    basket.userToken = this.accountService.getCurrentUserValue().token;
     this.setBasket(basket);
   }
   private addOrUpdateItem(
     items: IBasketItem[],
     itemToAdd: IBasketItem,
-    quantity: number
+    quantity: number,
   ): IBasketItem[] {
     console.log('addOrUpdateItem=>', items);
     const index = items.findIndex((i) => i.id === itemToAdd.id);
     if (index === -1) {
       items.push(itemToAdd);
+
     } else {
       items[index].quantity += quantity;
     }

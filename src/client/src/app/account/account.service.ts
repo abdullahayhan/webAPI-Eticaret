@@ -6,8 +6,6 @@ import { environment } from 'src/environments/environment';
 import { IUser } from '../shared/models/user';
 
 
-
-
 @Injectable({
   providedIn: 'root'
 })
@@ -54,15 +52,16 @@ export class AccountService {
       map((user:IUser)=>{
         if (user) {
           localStorage.setItem('token',user.token);
+          this.currentUserSource.next(user);
         }
       })
     );
   }
 
+  
 
   loginOut(){
     localStorage.removeItem('token');
-    localStorage.removeItem('basket_id');
     this.currentUserSource.next(null);
     this.router.navigateByUrl('/');
   }
