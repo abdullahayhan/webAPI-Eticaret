@@ -18,8 +18,10 @@ export class AuthGuard implements CanActivate {
         if(auth){
           return true;
         }
-        this.router.navigate(['account/login'],{queryParams:{returnUrl:state.url}});
-        console.log('logine yönlendirildi');
+        else{
+          this.router.navigate(['account/login'],{queryParams:{returnUrl:state.url}});
+          console.log('logine yönlendirildi');
+        }
       })
     )
   }
