@@ -93,8 +93,7 @@ namespace API.Controllers
         public async Task<ActionResult<UserDTO>> GetCurrentUser()
         {
             var user = await userManager.FindByUserByClaimPrincipleWithAddressAsync(HttpContext.User);
-
-            return new UserDTO 
+            return new UserDTO
             {
                DisplayName = user.DisplayName,
                Email = user.Email,

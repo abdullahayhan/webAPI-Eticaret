@@ -16,8 +16,6 @@ namespace API.Infrastructure.DataContext
         {
         }
 
-
-
         public DbSet<AppUser> AppUsers { get; set; }
         public DbSet<Adress> Adresses { get; set; }
         public DbSet<Product> Products { get; set; }
